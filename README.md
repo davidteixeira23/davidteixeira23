@@ -42,5 +42,5 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 ### 📫 Como me encontrar
 
-*   💼 LinkedIn: [linkedin.com/in/seu-usuario](https://linkedin.com/in/seu-usuario)
-*   📧 E-mail: [seu.email@email.com](mailto:seu.email@email.com)
+*   💼 LinkedIn: (davidteixeira)
+*   📧 E-mail: (davidpedreira250@gmail.com)
