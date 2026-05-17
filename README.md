@@ -1,5 +1,11 @@
-# Olá, eu sou o David Teixeira! 👋
+# Olá, eu sou o David Teixeira! 👋 ![Visitantes](https://api.visitorbadge.io/api/visitors?page=davidteixeira23&tableColor=2ccce4&countColor=7f52ff&style=flat-square)
 
+### 🚀 Estudante de Desenvolvimento de Sistemas | Apaixonado por Dev & Eletrônica
+
+Tenho 16 anos, moro em São Paulo e atualmente estou cursando o **2º ano do ensino médio integrado a Desenvolvimento de Sistemas**. Sou fascinado por lógica de programação, design de interfaces e computação física (IoT), buscando sempre aprender novas tecnologias e aplicar conceitos em projetos reais.
+
+- ⚡ Atualmente trabalhando em um **Projeto de Irrigação Automática** automatizado com sensores.
+- 🎯 Focado em aprimorar minhas habilidades em backend, desenvolvimento mobile e lógica de programação.
 ### 🚀 Estudante de Desenvolvimento de Sistemas | Apaixonado por Dev & Eletrônica
 
 Tenho 16 anos, moro em São Paulo e atualmente estou cursando o **2º ano do ensino médio integrado a Desenvolvimento de Sistemas**. Sou fascinado por lógica de programação, design de interfaces e computação física (IoT), buscando sempre aprender novas tecnologias e aplicar conceitos em projetos reais.
