@@ -24,10 +24,10 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 ### 📌 Projetos em Destaque
 
-*   **🌱 Sistema de Irrigação Automática:** Projeto focado em automação residencial/IoT, utilizando sensores para monitorar a umidade do solo e realizar a rega automática de plantas de forma inteligente.
-*   **🚦 Protótipo de Semáforo Pedestre:** Projeto de computação física utilizando Arduino Nano e sensores de distância para controle de tráfego.
-*   **☕ Interfaces em Java:** Desenvolvimento de aplicações desktop explorando componentes gráficos e layouts dinâmicos com Java Swing.
-*   **💻 Desenvolvimento Web:** Criação de layouts responsivos estruturados com HTML/CSS e aplicações com lógica dinâmica em PHP e JavaScript.
+* **🌱 Sistema de Irrigação Automática:** Projeto focado em automação residencial/IoT, utilizando sensores para monitorar a umidade do solo e realizar a rega automática de plantas de forma inteligente.
+* **🚦 Protótipo de Semáforo Pedestre:** Projeto de computação física utilizando Arduino Nano e sensores de distância para controle de tráfego.
+* **☕ Interfaces em Java:** Desenvolvimento de aplicações desktop explorando componentes gráficos e layouts dinâmicos com Java Swing.
+* **💻 Desenvolvimento Web:** Criação de layouts responsivos estruturados com HTML/CSS e aplicações com lógica dinâmica em PHP e JavaScript.
 
 ---
 
@@ -42,5 +42,5 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 ### 📫 Como me encontrar
 
-*   💼 LinkedIn: (davidteixeira)
-*   📧 E-mail: (davidpedreira250@gmail.com)
+* 📧 E-mail: [davidpedreira250@gmail.com](mailto:davidpedreira250@gmail.com)
+* 💼 LinkedIn: [linkedin.com/in/seu-usuario](https://linkedin.com/in/seu-usuario)
