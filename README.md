@@ -1,4 +1,4 @@
-# Olá, eu sou o David Teixeira! 👋 ![Visitantes](https://api.visitorbadge.io/api/visitors?page=davidteixeira23&tableColor=2ccce4&countColor=7f52ff&style=flat-square)
+# Olá, eu sou o David Teixeira! 👋
 
 ### 🚀 Estudante de Desenvolvimento de Sistemas | Apaixonado por Dev & Eletrônica
 
