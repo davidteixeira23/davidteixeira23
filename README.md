@@ -6,12 +6,6 @@ Tenho 16 anos, moro em São Paulo e atualmente estou cursando o **2º ano do ens
 
 - ⚡ Atualmente trabalhando em um **Projeto de Irrigação Automática** automatizado com sensores.
 - 🎯 Focado em aprimorar minhas habilidades em backend, desenvolvimento mobile e lógica de programação.
-### 🚀 Estudante de Desenvolvimento de Sistemas | Apaixonado por Dev & Eletrônica
-
-Tenho 16 anos, moro em São Paulo e atualmente estou cursando o **2º ano do ensino médio integrado a Desenvolvimento de Sistemas**. Sou fascinado por lógica de programação, design de interfaces e computação física (IoT), buscando sempre aprender novas tecnologias e aplicar conceitos em projetos reais.
-
-- ⚡ Atualmente trabalhando em um **Projeto de Irrigação Automática** automatizado com sensores.
-- 🎯 Focado em aprimorar minhas habilidades em backend, desenvolvimento mobile e lógica de programação.
 
 ---
 
