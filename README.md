@@ -31,7 +31,7 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 ---
 
-### 📊 Estatísticas do GitHub
+
 
 ### 📊 Estatísticas do GitHub
 
