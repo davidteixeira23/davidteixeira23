@@ -35,6 +35,9 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 ### 📊 Estatísticas do GitHub
 
+<p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=gotham" alt="Sequência de Contribuições" />
+</p>
 
 ---
 
