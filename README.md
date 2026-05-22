@@ -32,9 +32,10 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 ---
 
 ### 📊 Estatísticas do GitHub
+### 📊 Estatísticas do GitHub
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&theme=gotham" alt="Linguagens mais usadas" height="165" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=davidteixeira23&theme=gotham" alt="Gráfico de Linguagens" height="165" />
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=gotham" alt="Sequência de Contribuições" height="165" />
 </p>
 
