@@ -39,15 +39,10 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 </p>
 <br>
 #### 📈 Detalhamento das Linguagens
-
-* **Java:** <progress value="70" max="100"></progress> **70%**
-* **PHP:** <progress value="50" max="100"></progress> **50%**
-* **C++ / Arduino:** <progress value="40" max="100"></progress> **40%**
-* **HTML5 / CSS3:** <progress value="40" max="100"></progress> **40%**
-* **JavaScript:** <progress value="20" max="100"></progress> **20%**
-* **Kotlin:** <progress value="10" max="100"></progress> **10%**
-
----
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&langs_count=6&theme=gotham" alt="Linguagens mais usadas" height="165" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=gotham" alt="Sequência de Contribuições" height="165" />
+</p>
 
 ### 📫 Como me encontrar
 
