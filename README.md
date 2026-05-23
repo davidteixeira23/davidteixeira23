@@ -35,8 +35,7 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 | Estatísticas Gerais | Linguagens mais usadas |
 | :---: | :---: |
-| <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=davidteixeira23&show_icons=true&theme=gotham&include_all_commits=true" height="180" /> | <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=davidteixeira23&layout=donut&theme=gotham&langs_count=6" height="180" /> |
-
+| <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=davidteixeira23&show_icons=true&theme=gotham&include_all_commits=true&count_private=true&cache_seconds=1800" height="180" /> | <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=davidteixeira23&layout=donut&theme=gotham&langs_count=6&cache_seconds=1800" height="180" /> |
 ---
 
 ### 📫 Como me encontrar
