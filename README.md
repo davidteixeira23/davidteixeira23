@@ -37,7 +37,9 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=davidteixeira23&theme=gotham" alt="Gráfico de Linguagens" height="165" />
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=gotham" alt="Sequência de Contribuições" height="165" />
 </p>
-
+  
+  <img width="725" src="https://github-readme-activity-graph.vercel.app/graph?username=GabrielOrtega23&theme=radical" />
+</div>
 ### 📫 Como me encontrar
 
 * 📧 E-mail: [davidpedreira250@gmail.com](mailto:davidpedreira250@gmail.com)
