@@ -2,14 +2,12 @@
 
 <p align="center">
   <img 
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&theme=gotham&langs_count=8" 
-    alt="Linguagens mais usadas"
+    src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&theme=gotham&langs_count=8"
     height="165"
   />
 
   <img 
-    src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=gotham" 
-    alt="Sequência de contribuições"
+    src="https://streak-stats.demolab.com?user=davidteixeira23&theme=gotham"
     height="165"
   />
 </p>
