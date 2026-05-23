@@ -2,8 +2,8 @@ name: Update GitHub Stats
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   # roda a cada 6 horas
-  workflow_dispatch:          # permite rodar manualmente
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -35,7 +35,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add github-stats.svg
-          git diff --cached --quiet || git commit -m "chore: atualiza estatísticas do GitHub [skip ci]"
+          git diff --cached --quiet && echo "Nenhuma mudança, pulando commit." && exit 0
+          git commit -m "chore: atualiza estatísticas do GitHub [skip ci]"
+          git fetch origin main
+          git rebase origin/main
           git push
