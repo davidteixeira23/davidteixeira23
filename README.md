@@ -34,7 +34,7 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 ### 📊 Estatísticas do GitHub
 
 <div align="center">
-  <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=SEU-USUARIO-AQUI&layout=compact&langs_count=6&theme=radical&hide_border=true" />
+  <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=SEU-USUARI&layout=compact&langs_count=6&theme=radical&hide_border=true" />
   <img height="180" src="https://github-readme-streak-stats.herokuapp.com/?user=SEU-USUARIO-AQUI&theme=radical&hide_border=true" />
 </div>
 
