@@ -141,21 +141,18 @@ function aggregateLanguages(repos) {
 
 // ─── Gera SVG ────────────────────────────────────────────────────────────────
 function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) {
-  // Dois cards lado a lado: esquerdo (stats) + direito (donut)
-  const W = 700, H = 220;
-  const DONUT_CX = 530, DONUT_CY = 110, DONUT_R = 80, DONUT_INNER = 48;
+  const W = 760, H = 220;
+  const DONUT_CX = 480, DONUT_CY = 110, DONUT_R = 80, DONUT_INNER = 46;
 
   function polarToXY(cx, cy, r, angleDeg) {
     const rad = ((angleDeg - 90) * Math.PI) / 180;
     return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
   }
 
-  // Gera arcos do donut
   let arcs = '';
   let startAngle = 0;
   languages.forEach((lang) => {
     const sweep = (lang.pct / 100) * 360;
-    // evita arco de 360 graus exato (bug SVG)
     const safeSweep = sweep >= 360 ? 359.99 : sweep;
     const endAngle = startAngle + safeSweep;
     const [x1, y1] = polarToXY(DONUT_CX, DONUT_CY, DONUT_R, startAngle);
@@ -167,8 +164,8 @@ function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) 
     startAngle += safeSweep;
   });
 
-  // Legenda à esquerda do donut (vertical)
-  const LEG_X = 408;
+  // Legenda à direita do donut
+  const LEG_X = 575;
   const LEG_Y_START = DONUT_CY - ((languages.length - 1) * 22) / 2;
   let legend = '';
   languages.forEach((lang, i) => {
@@ -176,10 +173,9 @@ function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) 
     legend += `
       <rect x="${LEG_X}" y="${ly - 9}" width="10" height="10" rx="3" fill="${lang.color}"/>
       <text x="${LEG_X + 15}" y="${ly}" font-family="monospace" font-size="12" fill="#c9d1d9">${lang.name}</text>
-      <text x="${LEG_X + 110}" y="${ly}" text-anchor="end" font-family="monospace" font-size="12" fill="${lang.color}" font-weight="bold">${lang.pct}%</text>`;
+      <text x="${W - 14}" y="${ly}" text-anchor="end" font-family="monospace" font-size="12" fill="${lang.color}" font-weight="bold">${lang.pct}%</text>`;
   });
 
-  // top language para centro do donut
   const topLang = languages[0];
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
@@ -192,14 +188,48 @@ function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) 
 
   <rect width="${W}" height="${H}" rx="14" fill="url(#bg)" stroke="#30363d" stroke-width="1"/>
 
-  <!-- LADO ESQUERDO: título + 3 métricas + barra de linguagens -->
+  <!-- LADO ESQUERDO -->
   <text x="20" y="30" font-family="monospace" font-size="13" fill="#58a6ff" font-weight="bold">⚡ davidteixeira23</text>
-  <line x1="20" y1="40" x2="390" y2="40" stroke="#21262d" stroke-width="1"/>
+  <line x1="20" y1="40" x2="370" y2="40" stroke="#21262d" stroke-width="1"/>
 
-  <!-- 3 cards de métricas -->
-  <rect x="20" y="50" width="108" height="58" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-  <text x="74" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Commits</text>
-  <text x="74" y="96" text-anchor="middle" font-family="monospace" font-size="22" fill="#3fb950" font-weight="bold">${totalCommits}</text>
+  <rect x="20" y="50" width="100" height="56" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="70" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Commits</text>
+  <text x="70" y="94" text-anchor="middle" font-family="monospace" font-size="22" fill="#3fb950" font-weight="bold">${totalCommits}</text>
+
+  <rect x="132" y="50" width="100" height="56" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="182" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🔥 Streak</text>
+  <text x="182" y="94" text-anchor="middle" font-family="monospace" font-size="22" fill="#f78166" font-weight="bold">${currentStreak}d</text>
+
+  <rect x="244" y="50" width="100" height="56" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="294" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🏆 Recorde</text>
+  <text x="294" y="94" text-anchor="middle" font-family="monospace" font-size="22" fill="#e3b341" font-weight="bold">${longestStreak}d</text>
+
+  <text x="20" y="128" font-family="monospace" font-size="10" fill="#8b949e">Top Languages</text>
+  ${languages.map((lang, i) => {
+    const barW = Math.round(lang.pct * 2.8);
+    return `
+  <rect x="20" y="${139 + i * 16}" width="8" height="8" rx="2" fill="${lang.color}"/>
+  <text x="32" y="${148 + i * 16}" font-family="monospace" font-size="10" fill="#8b949e">${lang.name}</text>
+  <rect x="105" y="${140 + i * 16}" width="${barW}" height="6" rx="3" fill="${lang.color}" opacity="0.7"/>
+  <text x="362" y="${148 + i * 16}" text-anchor="end" font-family="monospace" font-size="10" fill="${lang.color}" font-weight="bold">${lang.pct}%</text>`;
+  }).join('')}
+
+  <!-- divisor vertical -->
+  <line x1="378" y1="16" x2="378" y2="${H - 16}" stroke="#21262d" stroke-width="1"/>
+
+  <!-- DONUT -->
+  ${arcs}
+  <circle cx="${DONUT_CX}" cy="${DONUT_CY}" r="${DONUT_INNER - 1}" fill="#0d1117"/>
+  <text x="${DONUT_CX}" y="${DONUT_CY - 6}" text-anchor="middle" font-family="monospace" font-size="9" fill="#8b949e">top lang</text>
+  <text x="${DONUT_CX}" y="${DONUT_CY + 9}" text-anchor="middle" font-family="monospace" font-size="11" fill="${topLang.color}" font-weight="bold">${topLang.name}</text>
+  <text x="${DONUT_CX}" y="${DONUT_CY + 23}" text-anchor="middle" font-family="monospace" font-size="11" fill="${topLang.color}">${topLang.pct}%</text>
+
+  <!-- LEGENDA -->
+  ${legend}
+
+  <text x="${W - 12}" y="${H - 7}" text-anchor="end" font-family="monospace" font-size="9" fill="#484f58">Atualizado via GitHub Actions</text>
+</svg>`;
+}
 
   <rect x="140" y="50" width="108" height="58" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
   <text x="194" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🔥 Streak</text>
