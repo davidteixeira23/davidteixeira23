@@ -36,9 +36,6 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 # 📊 Estatísticas do GitHub
 
-<p align="center">
-  <img src="./github-stats.svg" width="800">
-</p>
 
 <p align="center">
   <br>
