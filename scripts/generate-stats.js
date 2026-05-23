@@ -1,389 +1,249 @@
-// generate-stats.js
-// GitHub Premium Stats Card
-// by David Teixeira
+const fetch = (...args) => import('node-fetch').then(m => m.default(...args));
+const fs = require('fs');
 
-const fs = require("fs");
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
-
-const USERNAME = process.env.GITHUB_USERNAME || "davidteixeira23";
+const USERNAME = process.env.GITHUB_USERNAME || 'davidteixeira23';
 const TOKEN = process.env.GITHUB_TOKEN;
 
-const COLORS = {
-  background: "#0d1117",
-  card: "#161b22",
-  border: "#30363d",
-  text: "#c9d1d9",
-  muted: "#8b949e",
-  green: "#3fb950",
-  orange: "#f0883e",
-  yellow: "#d29922",
-  blue: "#58a6ff",
-  purple: "#a371f7",
-  pink: "#ff7b72",
+const HEADERS = {
+  'Authorization': `Bearer ${TOKEN}`,
+  'Content-Type': 'application/json',
 };
 
-async function github(query) {
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ query }),
-  });
+// Cores por linguagem
+const LANG_COLORS = {
+  'Java': '#e07b39',
+  'JavaScript': '#f0c020',
+  'PHP': '#7F52FF',
+  'HTML': '#e34f26',
+  'CSS': '#1572B6',
+  'Kotlin': '#A97BFF',
+  'C++': '#00599C',
+  'Python': '#3572A5',
+  'TypeScript': '#2b7489',
+  'Shell': '#89e051',
+  'Other': '#73726c',
+};
 
-  return (await res.json()).data;
+function color(lang) {
+  return LANG_COLORS[lang] || LANG_COLORS['Other'];
 }
 
-async function getStats() {
+// ─── Busca dados via GraphQL ────────────────────────────────────────────────
+async function fetchStats() {
   const query = `
-  {
-    user(login: "${USERNAME}") {
-      contributionsCollection {
-        contributionCalendar {
-          totalContributions
+    query($login: String!) {
+      user(login: $login) {
+        repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+          nodes {
+            languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+              edges { size node { name } }
+            }
+            defaultBranchRef {
+              target {
+                ... on Commit {
+                  history(first: 1) { totalCount }
+                }
+              }
+            }
+          }
         }
-      }
-
-      repositories(first: 100, ownerAffiliations: OWNER) {
-        nodes {
-          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
-            edges {
-              size
-              node {
-                name
-                color
+        contributionsCollection {
+          totalCommitContributions
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                contributionCount
+                date
               }
             }
           }
         }
       }
     }
-  }
   `;
 
-  const data = await github(query);
-
-  const commits =
-    data.user.contributionsCollection.contributionCalendar
-      .totalContributions;
-
-  const repos = data.user.repositories.nodes;
-
-  const languageMap = {};
-
-  repos.forEach((repo) => {
-    repo.languages.edges.forEach((lang) => {
-      const name = lang.node.name;
-
-      if (!languageMap[name]) {
-        languageMap[name] = {
-          size: 0,
-          color: lang.node.color || "#888",
-        };
-      }
-
-      languageMap[name].size += lang.size;
-    });
+  const res = await fetch('https://api.github.com/graphql', {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify({ query, variables: { login: USERNAME } }),
   });
 
-  const total = Object.values(languageMap).reduce(
-    (a, b) => a + b.size,
-    0
-  );
+  const json = await res.json();
+  if (json.errors) {
+    console.error('GraphQL errors:', JSON.stringify(json.errors, null, 2));
+    process.exit(1);
+  }
+  return json.data.user;
+}
 
-  const languages = Object.entries(languageMap)
-    .map(([name, value]) => ({
-      name,
-      percent: ((value.size / total) * 100).toFixed(1),
-      color: value.color,
-    }))
-    .sort((a, b) => b.percent - a.percent)
+// ─── Calcula streak ─────────────────────────────────────────────────────────
+function calcStreaks(calendar) {
+  const days = calendar.weeks.flatMap(w => w.contributionDays)
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  let currentStreak = 0;
+  let longestStreak = 0;
+  let tempStreak = 0;
+
+  const today = new Date().toISOString().split('T')[0];
+
+  for (let i = 0; i < days.length; i++) {
+    const day = days[i];
+    if (day.contributionCount > 0) {
+      tempStreak++;
+      if (tempStreak > longestStreak) longestStreak = tempStreak;
+    } else {
+      if (day.date !== today) tempStreak = 0;
+    }
+  }
+
+  for (let i = days.length - 1; i >= 0; i--) {
+    const day = days[i];
+    if (day.date === today && day.contributionCount === 0) continue;
+    if (day.contributionCount > 0) currentStreak++;
+    else break;
+  }
+
+  return { currentStreak, longestStreak };
+}
+
+// ─── Agrega linguagens ───────────────────────────────────────────────────────
+function aggregateLanguages(repos) {
+  const totals = {};
+  for (const repo of repos) {
+    for (const edge of repo.languages.edges) {
+      const lang = edge.node.name;
+      totals[lang] = (totals[lang] || 0) + edge.size;
+    }
+  }
+
+  if (totals['HTML'] || totals['CSS']) {
+    totals['HTML/CSS'] = (totals['HTML'] || 0) + (totals['CSS'] || 0);
+    delete totals['HTML'];
+    delete totals['CSS'];
+  }
+
+  const sorted = Object.entries(totals)
+    .sort((a, b) => b[1] - a[1])
     .slice(0, 6);
 
-  return {
-    commits,
-    languages,
-  };
+  const total = sorted.reduce((s, [, v]) => s + v, 0);
+  return sorted.map(([name, size]) => ({
+    name,
+    pct: Math.round((size / total) * 100),
+    color: LANG_COLORS[name] || LANG_COLORS['Other'],
+  }));
 }
 
-function polarToCartesian(cx, cy, r, angle) {
-  const rad = ((angle - 90) * Math.PI) / 180.0;
+// ─── Gera SVG ────────────────────────────────────────────────────────────────
+function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) {
+  const W = 800, H = 300;
+  const PIE_CX = 580, PIE_CY = 135, PIE_R = 60; 
+  const DIVIDER_X = 400;
 
-  return {
-    x: cx + r * Math.cos(rad),
-    y: cy + r * Math.sin(rad),
-  };
+  let slices = '';
+  let accumulatedPercentage = 0;
+  const circumference = 2 * Math.PI * PIE_R;
+
+  // Renderiza as fatias da rosca usando stroke-dasharray para precisão limpa
+  languages.forEach((lang) => {
+    if (lang.pct <= 0) return;
+    
+    const strokeLength = (lang.pct / 100) * circumference;
+    const strokeOffset = circumference - (accumulatedPercentage / 100) * circumference;
+    
+    slices += `
+      <circle cx="${PIE_CX}" cy="${PIE_CY}" r="${PIE_R}"
+              fill="transparent"
+              stroke="${lang.color}"
+              stroke-width="28"
+              stroke-dasharray="${strokeLength} ${circumference}"
+              stroke-dashoffset="${strokeOffset}"
+              transform="rotate(-90 ${PIE_CX} ${PIE_CY})" />`;
+              
+    accumulatedPercentage += lang.pct;
+  });
+
+  // Legenda abaixo do gráfico de rosca — Organizada em 2 colunas claras
+  const LEG_Y_START = 225;
+  const LEG_COL1_X = 440;
+  const LEG_COL2_X = 610;
+  let legendItems = '';
+  
+  languages.forEach((lang, i) => {
+    const col = i < 3 ? 0 : 1;
+    const row = i % 3;
+    const lx = col === 0 ? LEG_COL1_X : LEG_COL2_X;
+    const ly = LEG_Y_START + row * 18;
+    legendItems += `
+      <rect x="${lx}" y="${ly - 8}" width="10" height="10" rx="2" fill="${lang.color}"/>
+      <text x="${lx + 16}" y="${ly}" font-family="monospace" font-size="11" fill="#8b949e">${lang.name} <tspan fill="#58a6ff" font-weight="bold">${lang.pct}%</tspan></text>`;
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#161b22"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="${W}" height="${H}" rx="12" fill="url(#cardBg)" stroke="#30363d" stroke-width="1"/>
+
+  <text x="24" y="36" font-family="monospace" font-size="14" fill="#58a6ff" font-weight="bold">⚡ Estatísticas do GitHub — ${USERNAME}</text>
+  <line x1="24" y1="46" x2="${W - 24}" y2="46" stroke="#21262d" stroke-width="1"/>
+
+  <line x1="${DIVIDER_X}" y1="56" x2="${DIVIDER_X}" y2="${H - 20}" stroke="#21262d" stroke-width="1"/>
+
+  <rect x="24" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="80" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Commits</text>
+  <text x="80" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950" font-weight="bold">${totalCommits}</text>
+
+  <rect x="148" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="204" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🔥 Streak</text>
+  <text x="204" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#f78166" font-weight="bold">${currentStreak}d</text>
+
+  <rect x="272" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="328" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🏆 Recorde</text>
+  <text x="328" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#e3b341" font-weight="bold">${longestStreak}d</text>
+
+  <text x="24" y="152" font-family="monospace" font-size="11" fill="#8b949e" font-weight="bold">Top Languages</text>
+  <line x1="24" y1="158" x2="380" y2="158" stroke="#21262d" stroke-width="1"/>
+  ${languages.map((lang, i) => `
+  <rect x="24" y="${168 + i * 20}" width="9" height="9" rx="2" fill="${lang.color}"/>
+  <text x="38" y="${178 + i * 20}" font-family="monospace" font-size="12" fill="#c9d1d9">${lang.name}</text>
+  <text x="380" y="${178 + i * 20}" text-anchor="end" font-family="monospace" font-size="12" fill="#58a6ff" font-weight="bold">${lang.pct}%</text>
+  <rect x="150" y="${171 + i * 20}" width="${Math.round(lang.pct * 1.8)}" height="5" rx="2.5" fill="${lang.color}" opacity="0.8"/>
+  `).join('')}
+
+  <text x="${PIE_CX}" y="58" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b949e">Distribuição</text>
+  
+  <text x="${PIE_CX}" y="${PIE_CY + 4}" text-anchor="middle" font-family="monospace" font-size="12" fill="#8b949e" font-weight="bold">top lang</text>
+  
+  ${slices}
+  ${legendItems}
+
+  <text x="${W - 16}" y="${H - 8}" text-anchor="end" font-family="monospace" font-size="10" fill="#484f58">Atualizado via GitHub Actions</text>
+</svg>`;
 }
 
-function describeArc(x, y, radius, startAngle, endAngle) {
-  const start = polarToCartesian(x, y, radius, endAngle);
-  const end = polarToCartesian(x, y, radius, startAngle);
-
-  const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-
-  return [
-    "M",
-    start.x,
-    start.y,
-    "A",
-    radius,
-    radius,
-    0,
-    largeArcFlag,
-    0,
-    end.x,
-    end.y,
-  ].join(" ");
-}
-
-function generateSVG(stats) {
-  const W = 920;
-  const H = 260;
-
-  const donutCX = 700;
-  const donutCY = 130;
-  const donutR = 75;
-
-  let angle = 0;
-
-  const donut = stats.languages
-    .map((lang) => {
-      const percent = parseFloat(lang.percent);
-      const sweep = (percent / 100) * 360;
-
-      const path = describeArc(
-        donutCX,
-        donutCY,
-        donutR,
-        angle,
-        angle + sweep
-      );
-
-      const item = `
-      <path
-        d="${path}"
-        fill="none"
-        stroke="${lang.color}"
-        stroke-width="32"
-        stroke-linecap="butt"
-      />
-      `;
-
-      angle += sweep;
-
-      return item;
-    })
-    .join("");
-
-  const bars = stats.languages
-    .map((lang, index) => {
-      const y = 150 + index * 24;
-      const width = parseFloat(lang.percent) * 4;
-
-      return `
-      <circle cx="35" cy="${y - 5}" r="5" fill="${lang.color}" />
-
-      <text
-        x="50"
-        y="${y}"
-        fill="${COLORS.text}"
-        font-size="14"
-        font-family="monospace"
-      >
-        ${lang.name}
-      </text>
-
-      <rect
-        x="140"
-        y="${y - 13}"
-        width="360"
-        height="10"
-        rx="5"
-        fill="#21262d"
-      />
-
-      <rect
-        x="140"
-        y="${y - 13}"
-        width="${width}"
-        height="10"
-        rx="5"
-        fill="${lang.color}"
-      />
-
-      <text
-        x="520"
-        y="${y}"
-        fill="${lang.color}"
-        font-size="13"
-        font-family="monospace"
-      >
-        ${lang.percent}%
-      </text>
-      `;
-    })
-    .join("");
-
-  const legend = stats.languages
-    .map((lang, index) => {
-      const y = 55 + index * 28;
-
-      return `
-      <circle cx="610" cy="${y}" r="6" fill="${lang.color}" />
-
-      <text
-        x="625"
-        y="${y + 5}"
-        fill="${COLORS.text}"
-        font-size="14"
-        font-family="monospace"
-      >
-        ${lang.name}
-      </text>
-      `;
-    })
-    .join("");
-
-  return `
-  <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-    <rect width="${W}" height="${H}" rx="18" fill="${COLORS.background}" />
-
-    <rect
-      x="1"
-      y="1"
-      width="${W - 2}"
-      height="${H - 2}"
-      rx="18"
-      stroke="${COLORS.border}"
-    />
-
-    <text
-      x="30"
-      y="35"
-      fill="${COLORS.blue}"
-      font-size="24"
-      font-family="monospace"
-      font-weight="bold"
-    >
-      ⚡ ${USERNAME}
-    </text>
-
-    <!-- Cards -->
-
-    <rect x="30" y="55" width="150" height="80" rx="12" fill="${COLORS.card}" stroke="${COLORS.border}" />
-    <text x="105" y="82" text-anchor="middle" fill="${COLORS.muted}" font-size="14" font-family="monospace">
-      Commits
-    </text>
-    <text x="105" y="118" text-anchor="middle" fill="${COLORS.green}" font-size="34" font-family="monospace" font-weight="bold">
-      ${stats.commits}
-    </text>
-
-    <rect x="200" y="55" width="150" height="80" rx="12" fill="${COLORS.card}" stroke="${COLORS.border}" />
-    <text x="275" y="82" text-anchor="middle" fill="${COLORS.muted}" font-size="14" font-family="monospace">
-      🔥 Streak
-    </text>
-    <text x="275" y="118" text-anchor="middle" fill="${COLORS.orange}" font-size="34" font-family="monospace" font-weight="bold">
-      8d
-    </text>
-
-    <rect x="370" y="55" width="150" height="80" rx="12" fill="${COLORS.card}" stroke="${COLORS.border}" />
-    <text x="445" y="82" text-anchor="middle" fill="${COLORS.muted}" font-size="14" font-family="monospace">
-      🏆 Recorde
-    </text>
-    <text x="445" y="118" text-anchor="middle" fill="${COLORS.yellow}" font-size="34" font-family="monospace" font-weight="bold">
-      8d
-    </text>
-
-    <!-- Divider -->
-
-    <line
-      x1="575"
-      y1="40"
-      x2="575"
-      y2="220"
-      stroke="${COLORS.border}"
-      stroke-width="1"
-    />
-
-    <!-- Bars -->
-
-    <text
-      x="30"
-      y="165"
-      fill="${COLORS.muted}"
-      font-size="16"
-      font-family="monospace"
-    >
-      Top Languages
-    </text>
-
-    ${bars}
-
-    <!-- Donut -->
-
-    ${donut}
-
-    <circle
-      cx="${donutCX}"
-      cy="${donutCY}"
-      r="42"
-      fill="${COLORS.background}"
-    />
-
-    <text
-      x="${donutCX}"
-      y="${donutCY - 5}"
-      text-anchor="middle"
-      fill="${COLORS.muted}"
-      font-size="12"
-      font-family="monospace"
-    >
-      top lang
-    </text>
-
-    <text
-      x="${donutCX}"
-      y="${donutCY + 20}"
-      text-anchor="middle"
-      fill="${stats.languages[0].color}"
-      font-size="18"
-      font-family="monospace"
-      font-weight="bold"
-    >
-      ${stats.languages[0].name}
-    </text>
-
-    <!-- Legend -->
-
-    ${legend}
-
-    <text
-      x="760"
-      y="240"
-      fill="${COLORS.muted}"
-      font-size="12"
-      font-family="monospace"
-    >
-      Atualizado via GitHub Actions
-    </text>
-
-  </svg>
-  `;
-}
-
+// ─── Main ────────────────────────────────────────────────────────────────────
 async function main() {
-  const stats = await getStats();
+  console.log(`Buscando dados de @${USERNAME}...`);
+  const user = await fetchStats();
 
-  const svg = generateSVG(stats);
+  const contributions = user.contributionsCollection;
+  const totalCommits = contributions.totalCommitContributions;
+  const { currentStreak, longestStreak } = calcStreaks(contributions.contributionCalendar);
+  const languages = aggregateLanguages(user.repositories.nodes);
 
-  fs.mkdirSync("./dist", { recursive: true });
+  console.log(`Commits: ${totalCommits} | Streak: ${currentStreak} | Recorde: ${longestStreak}`);
+  console.log('Linguagens:', languages.map(l => `${l.name} ${l.pct}%`).join(', '));
 
-  fs.writeFileSync("./dist/github-stats.svg", svg);
-
-  console.log("SVG gerado com sucesso!");
+  const svg = generateSVG({ totalCommits, currentStreak, longestStreak, languages });
+  fs.writeFileSync('github-stats.svg', svg, 'utf8');
+  console.log('✅ github-stats.svg gerado com sucesso!');
 }
 
-main();
+main().catch(err => { console.error(err); process.exit(1); });
