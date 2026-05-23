@@ -143,7 +143,7 @@ function aggregateLanguages(repos) {
 function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) {
   const W = 800, H = 300;
   // Layout: esquerda = métricas + tabela (x 0..390), direita = pizza + legenda (x 410..780)
-  const PIE_CX = 590, PIE_CY = 145, PIE_R = 85;
+  const PIE_CX = 600, PIE_CY = 155, PIE_R = 82;
   const DIVIDER_X = 400;
 
   function polarToXY(cx, cy, r, angleDeg) {
@@ -173,7 +173,7 @@ function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) 
   });
 
   // Legenda abaixo da pizza — 2 colunas
-  const LEG_Y_START = PIE_CY + PIE_R + 16;
+  const LEG_Y_START = PIE_CY + PIE_R + 14;
   const LEG_COL1_X = 420;
   const LEG_COL2_X = 590;
   let legendItems = '';
@@ -233,7 +233,7 @@ function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) 
   `).join('')}
 
   <!-- LADO DIREITO: pizza -->
-  <text x="${PIE_CX}" y="68" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b949e">Distribuição</text>
+  <text x="${PIE_CX}" y="58" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b949e">Distribuição</text>
   ${slices}
   ${legendItems}
 
