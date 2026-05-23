@@ -34,6 +34,7 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 ### 📊 Estatísticas do GitHub
 
 <p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=davidteixeira23&show_icons=true&theme=gotham&include_all_commits=true" alt="Estatísticas Gerais" height="190" />
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=donut&theme=gotham&langs_count=8" alt="Linguagens mais usadas" height="190" />
 </p>
 
