@@ -1,4 +1,4 @@
- # Olá, eu sou o David Teixeira! 👋
+# Olá, eu sou o David Teixeira! 👋
 
 ### 🚀 Estudante de Desenvolvimento de Sistemas | Apaixonado por Dev & Eletrônica
 
@@ -33,26 +33,11 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 ### 📊 Estatísticas do GitHub
 
-<img 
-  src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&theme=gotham&langs_count=8" 
-  alt="Linguagens mais usadas" 
-  height="165"
-/>
-### 📊 Estatísticas do GitHub
-
 <p align="center">
-  <img 
-    src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&theme=gotham&langs_count=8"
-    height="165"
-   
-  />
-<br>
-  <img 
-    src="https://streak-stats.demolab.com?user=davidteixeira23&theme=gotham"
-    height="165"
-  />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=donut&theme=gotham&langs_count=8" alt="Linguagens mais usadas" height="190" />
 </p>
 
+---
 
 ### 📫 Como me encontrar
 
