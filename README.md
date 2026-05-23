@@ -39,7 +39,7 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
   height="165"
 />
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=gotham" alt="Sequência de Contribuições" height="165" />
-</p>
+
 
 ### 📫 Como me encontrar
 
