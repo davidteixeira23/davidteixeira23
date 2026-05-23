@@ -36,23 +36,17 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 
 # 📊 Estatísticas do GitHub
 
-<p align="center">
-  <img src="./github-stats.svg" width="800">
-</p>
-
-<p align="center">
-  <br>
-  <table align="center" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td>
-        <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=github_dark&hide_border=false" alt="GitHub Streak Stats" height="195" />
-      </td>
-      <td>
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&theme=github_dark&hide_border=false&langs_count=6" alt="Top Languages Stats" height="195" />
-      </td>
-    </tr>
-  </table>
-</p>
+<picture>
+  <source
+    srcset="https://github-readme-stats.vercel.app/api?username=davidteixeira23&show_icons=true&theme=dark"
+    media="(prefers-color-scheme: dark)"
+  />
+  <source
+    srcset="https://github-readme-stats.vercel.app/api?username=davidteixeira23&show_icons=true"
+    media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+  />
+  <img src="https://github-readme-stats.vercel.app/api?username=davidteixeira23&show_icons=true" />
+</picture>
 
 ---
 
