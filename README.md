@@ -32,28 +32,10 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 ---
 
 ### 📊 Estatísticas do GitHub
-### 📊 Estatísticas do GitHub
 
 <div align="center">
-
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=davidteixeira23&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true"/>
-
-<img height="180em" src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=tokyonight"/>
-
-</div>
-
-<div align="center">
-
-<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&langs_count=8&theme=tokyonight"/>
-
-<img height="180em" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=davidteixeira23&theme=tokyonight"/>
-
-</div>
-
-<div align="center">
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=davidteixeira23&theme=tokyonight"/>
-
+  <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=SEU-USUARIO-AQUI&layout=compact&langs_count=6&theme=radical&hide_border=true" />
+  <img height="180" src="https://github-readme-streak-stats.herokuapp.com/?user=SEU-USUARIO-AQUI&theme=radical&hide_border=true" />
 </div>
 
 ### 📫 Como me encontrar
