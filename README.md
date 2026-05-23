@@ -30,13 +30,45 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 * **💻 Desenvolvimento Web:** Criação de layouts responsivos estruturados com HTML/CSS e aplicações com lógica dinâmica em PHP e JavaScript.
 
 ---
+name: Update GitHub Stats
+ 
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # roda a cada 6 horas
+  workflow_dispatch:          # permite rodar manualmente
+ 
+permissions:
+  contents: write
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+ 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+ 
+      - name: Install dependencies
+        run: npm install node-fetch
+ 
+      - name: Generate stats SVG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: davidteixeira23
+        run: node scripts/generate-stats.js
+ 
+      - name: Commit and push SVG
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add github-stats.svg
+          git diff --cached --quiet || git commit -m "chore: atualiza estatísticas do GitHub [skip ci]"
+          git push
 
-### 📊 Estatísticas do GitHub
-
-<div align="center">
-  <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&langs_count=6&theme=radical&hide_border=true" />
-  <img height="180" src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=radical&hide_border=true" />
-</div>
 
 ### 📫 Como me encontrar
 
