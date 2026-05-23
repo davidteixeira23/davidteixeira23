@@ -32,10 +32,29 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 ---
 
 ### 📊 Estatísticas do GitHub
+### 📊 Estatísticas do GitHub
 
-| Estatísticas Gerais | Linguagens mais usadas |
-| :---: | :---: |
-| <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=davidteixeira23&show_icons=true&theme=gotham&include_all_commits=true&count_private=true&cache_seconds=1800" height="180" /> | <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=donut&theme=gotham&langs_count=6&cache_seconds=1800" height="180" /> |
+<div align="center">
+
+<img height="180em" src="https://github-readme-stats.vercel.app/api?username=davidteixeira23&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true"/>
+
+<img height="180em" src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=tokyonight"/>
+
+</div>
+
+<div align="center">
+
+<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&langs_count=8&theme=tokyonight"/>
+
+<img height="180em" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=davidteixeira23&theme=tokyonight"/>
+
+</div>
+
+<div align="center">
+
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=davidteixeira23&theme=tokyonight"/>
+
+</div>
 
 ### 📫 Como me encontrar
 
