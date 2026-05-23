@@ -21,7 +21,7 @@
   <!-- Total de Commits -->
   <rect x="24" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
   <text x="80" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Total Commits</text>
-  <text x="80" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950" font-weight="bold">130</text>
+  <text x="80" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950" font-weight="bold">131</text>
 
   <!-- Streak Atual -->
   <rect x="148" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
