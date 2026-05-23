@@ -33,6 +33,7 @@ Aqui estão as linguagens e ferramentas que estou aprendendo e utilizando nos me
 * 💻 **Desenvolvimento Web:** Criação de layouts responsivos estruturados com HTML/CSS e aplicações com lógica dinâmica em PHP e JavaScript.
 
 ---
+
 # 📊 Estatísticas do GitHub
 
 <p align="center">
