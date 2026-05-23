@@ -21,7 +21,7 @@
   <!-- Total de Commits -->
   <rect x="24" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
   <text x="80" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Total Commits</text>
-  <text x="80" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950" font-weight="bold">131</text>
+  <text x="80" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950" font-weight="bold">132</text>
 
   <!-- Streak Atual -->
   <rect x="148" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
@@ -69,21 +69,21 @@
   
 
   <!-- LADO DIREITO: pizza -->
-  <text x="590" y="68" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b949e">Distribuição</text>
-  <path d="M590,145 L590.00,60.00 A85,85 0 1 1 521.23,95.04 Z" fill="#e07b39" stroke="#0d1117" stroke-width="2"/><text x="613.93" y="195.96" text-anchor="middle" font-family="monospace" font-size="11" fill="#fff" font-weight="bold">85%</text><path d="M590,145 L521.23,95.04 A85,85 0 0 1 549.05,70.51 Z" fill="#f0c020" stroke="#0d1117" stroke-width="2"/><path d="M590,145 L549.05,70.51 A85,85 0 0 1 568.86,62.67 Z" fill="#00599C" stroke="#0d1117" stroke-width="2"/><path d="M590,145 L568.86,62.67 A85,85 0 0 1 579.35,60.67 Z" fill="#7F52FF" stroke="#0d1117" stroke-width="2"/><path d="M590,145 L579.35,60.67 A85,85 0 0 1 584.66,60.17 Z" fill="#73726c" stroke="#0d1117" stroke-width="2"/><path d="M590,145 L584.66,60.17 A85,85 0 0 1 590.00,60.00 Z" fill="#73726c" stroke="#0d1117" stroke-width="2"/>
+  <text x="600" y="58" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b949e">Distribuição</text>
+  <path d="M600,155 L600.00,73.00 A82,82 0 1 1 533.66,106.80 Z" fill="#e07b39" stroke="#0d1117" stroke-width="2"/><text x="623.08" y="204.30" text-anchor="middle" font-family="monospace" font-size="11" fill="#fff" font-weight="bold">85%</text><path d="M600,155 L533.66,106.80 A82,82 0 0 1 560.50,83.14 Z" fill="#f0c020" stroke="#0d1117" stroke-width="2"/><path d="M600,155 L560.50,83.14 A82,82 0 0 1 579.61,75.58 Z" fill="#00599C" stroke="#0d1117" stroke-width="2"/><path d="M600,155 L579.61,75.58 A82,82 0 0 1 589.72,73.65 Z" fill="#7F52FF" stroke="#0d1117" stroke-width="2"/><path d="M600,155 L589.72,73.65 A82,82 0 0 1 594.85,73.16 Z" fill="#73726c" stroke="#0d1117" stroke-width="2"/><path d="M600,155 L594.85,73.16 A82,82 0 0 1 600.00,73.00 Z" fill="#73726c" stroke="#0d1117" stroke-width="2"/>
   
-      <rect x="420" y="238" width="9" height="9" rx="2" fill="#e07b39"/>
-      <text x="433" y="246" font-family="monospace" font-size="11" fill="#8b949e">Java 85%</text>
-      <rect x="420" y="256" width="9" height="9" rx="2" fill="#f0c020"/>
-      <text x="433" y="264" font-family="monospace" font-size="11" fill="#8b949e">JavaScript 7%</text>
-      <rect x="420" y="274" width="9" height="9" rx="2" fill="#00599C"/>
-      <text x="433" y="282" font-family="monospace" font-size="11" fill="#8b949e">C++ 4%</text>
-      <rect x="590" y="238" width="9" height="9" rx="2" fill="#7F52FF"/>
-      <text x="603" y="246" font-family="monospace" font-size="11" fill="#8b949e">PHP 2%</text>
-      <rect x="590" y="256" width="9" height="9" rx="2" fill="#73726c"/>
-      <text x="603" y="264" font-family="monospace" font-size="11" fill="#8b949e">Hack 1%</text>
-      <rect x="590" y="274" width="9" height="9" rx="2" fill="#73726c"/>
-      <text x="603" y="282" font-family="monospace" font-size="11" fill="#8b949e">HTML/CSS 1%</text>
+      <rect x="420" y="243" width="9" height="9" rx="2" fill="#e07b39"/>
+      <text x="433" y="251" font-family="monospace" font-size="11" fill="#8b949e">Java 85%</text>
+      <rect x="420" y="261" width="9" height="9" rx="2" fill="#f0c020"/>
+      <text x="433" y="269" font-family="monospace" font-size="11" fill="#8b949e">JavaScript 7%</text>
+      <rect x="420" y="279" width="9" height="9" rx="2" fill="#00599C"/>
+      <text x="433" y="287" font-family="monospace" font-size="11" fill="#8b949e">C++ 4%</text>
+      <rect x="590" y="243" width="9" height="9" rx="2" fill="#7F52FF"/>
+      <text x="603" y="251" font-family="monospace" font-size="11" fill="#8b949e">PHP 2%</text>
+      <rect x="590" y="261" width="9" height="9" rx="2" fill="#73726c"/>
+      <text x="603" y="269" font-family="monospace" font-size="11" fill="#8b949e">Hack 1%</text>
+      <rect x="590" y="279" width="9" height="9" rx="2" fill="#73726c"/>
+      <text x="603" y="287" font-family="monospace" font-size="11" fill="#8b949e">HTML/CSS 1%</text>
 
   <!-- rodapé -->
   <text x="784" y="292" text-anchor="end" font-family="monospace" font-size="10" fill="#484f58">Atualizado via GitHub Actions</text>
