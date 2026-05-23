@@ -141,104 +141,103 @@ function aggregateLanguages(repos) {
 
 // ─── Gera SVG ────────────────────────────────────────────────────────────────
 function generateSVG({ totalCommits, currentStreak, longestStreak, languages }) {
-  const W = 800, H = 300;
-  // Layout: esquerda = métricas + tabela (x 0..390), direita = pizza + legenda (x 410..780)
-  const PIE_CX = 600, PIE_CY = 155, PIE_R = 82;
-  const DIVIDER_X = 400;
+  // Dois cards lado a lado: esquerdo (stats) + direito (donut)
+  const W = 700, H = 220;
+  const DONUT_CX = 530, DONUT_CY = 110, DONUT_R = 80, DONUT_INNER = 48;
 
   function polarToXY(cx, cy, r, angleDeg) {
     const rad = ((angleDeg - 90) * Math.PI) / 180;
     return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
   }
 
-  let slices = '';
+  // Gera arcos do donut
+  let arcs = '';
   let startAngle = 0;
-
   languages.forEach((lang) => {
     const sweep = (lang.pct / 100) * 360;
-    const endAngle = startAngle + sweep;
-    const [x1, y1] = polarToXY(PIE_CX, PIE_CY, PIE_R, startAngle);
-    const [x2, y2] = polarToXY(PIE_CX, PIE_CY, PIE_R, endAngle);
-    const large = sweep > 180 ? 1 : 0;
-
-    slices += `<path d="M${PIE_CX},${PIE_CY} L${x1.toFixed(2)},${y1.toFixed(2)} A${PIE_R},${PIE_R} 0 ${large} 1 ${x2.toFixed(2)},${y2.toFixed(2)} Z" fill="${lang.color}" stroke="#0d1117" stroke-width="2"/>`;
-
-    // % dentro da fatia só se couber
-    const midAngle = startAngle + sweep / 2;
-    const [lx, ly] = polarToXY(PIE_CX, PIE_CY, PIE_R * 0.62, midAngle);
-    if (lang.pct >= 8) {
-      slices += `<text x="${lx.toFixed(2)}" y="${(ly + 4).toFixed(2)}" text-anchor="middle" font-family="monospace" font-size="11" fill="#fff" font-weight="bold">${lang.pct}%</text>`;
-    }
-    startAngle = endAngle;
+    // evita arco de 360 graus exato (bug SVG)
+    const safeSweep = sweep >= 360 ? 359.99 : sweep;
+    const endAngle = startAngle + safeSweep;
+    const [x1, y1] = polarToXY(DONUT_CX, DONUT_CY, DONUT_R, startAngle);
+    const [x2, y2] = polarToXY(DONUT_CX, DONUT_CY, DONUT_R, endAngle);
+    const [ix1, iy1] = polarToXY(DONUT_CX, DONUT_CY, DONUT_INNER, endAngle);
+    const [ix2, iy2] = polarToXY(DONUT_CX, DONUT_CY, DONUT_INNER, startAngle);
+    const large = safeSweep > 180 ? 1 : 0;
+    arcs += `<path d="M${x1.toFixed(2)},${y1.toFixed(2)} A${DONUT_R},${DONUT_R} 0 ${large} 1 ${x2.toFixed(2)},${y2.toFixed(2)} L${ix1.toFixed(2)},${iy1.toFixed(2)} A${DONUT_INNER},${DONUT_INNER} 0 ${large} 0 ${ix2.toFixed(2)},${iy2.toFixed(2)} Z" fill="${lang.color}" stroke="#0d1117" stroke-width="2"/>`;
+    startAngle += safeSweep;
   });
 
-  // Legenda abaixo da pizza — 2 colunas
-  const LEG_Y_START = PIE_CY + PIE_R + 14;
-  const LEG_COL1_X = 420;
-  const LEG_COL2_X = 590;
-  let legendItems = '';
+  // Legenda à esquerda do donut (vertical)
+  const LEG_X = 408;
+  const LEG_Y_START = DONUT_CY - ((languages.length - 1) * 22) / 2;
+  let legend = '';
   languages.forEach((lang, i) => {
-    const col = i < 3 ? 0 : 1;
-    const row = i % 3;
-    const lx = col === 0 ? LEG_COL1_X : LEG_COL2_X;
-    const ly = LEG_Y_START + row * 18;
-    legendItems += `
-      <rect x="${lx}" y="${ly - 8}" width="9" height="9" rx="2" fill="${lang.color}"/>
-      <text x="${lx + 13}" y="${ly}" font-family="monospace" font-size="11" fill="#8b949e">${lang.name} ${lang.pct}%</text>`;
+    const ly = LEG_Y_START + i * 22;
+    legend += `
+      <rect x="${LEG_X}" y="${ly - 9}" width="10" height="10" rx="3" fill="${lang.color}"/>
+      <text x="${LEG_X + 15}" y="${ly}" font-family="monospace" font-size="12" fill="#c9d1d9">${lang.name}</text>
+      <text x="${LEG_X + 110}" y="${ly}" text-anchor="end" font-family="monospace" font-size="12" fill="${lang.color}" font-weight="bold">${lang.pct}%</text>`;
   });
+
+  // top language para centro do donut
+  const topLang = languages[0];
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
-    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#161b22"/>
       <stop offset="100%" style="stop-color:#0d1117"/>
     </linearGradient>
   </defs>
 
-  <!-- fundo -->
-  <rect width="${W}" height="${H}" rx="12" fill="url(#cardBg)" stroke="#30363d" stroke-width="1"/>
+  <rect width="${W}" height="${H}" rx="14" fill="url(#bg)" stroke="#30363d" stroke-width="1"/>
 
-  <!-- título -->
-  <text x="24" y="36" font-family="monospace" font-size="14" fill="#58a6ff" font-weight="bold">⚡ GitHub Stats — davidteixeira23</text>
-  <line x1="24" y1="46" x2="${W - 24}" y2="46" stroke="#21262d" stroke-width="1"/>
+  <!-- LADO ESQUERDO: título + 3 métricas + barra de linguagens -->
+  <text x="20" y="30" font-family="monospace" font-size="13" fill="#58a6ff" font-weight="bold">⚡ davidteixeira23</text>
+  <line x1="20" y1="40" x2="390" y2="40" stroke="#21262d" stroke-width="1"/>
+
+  <!-- 3 cards de métricas -->
+  <rect x="20" y="50" width="108" height="58" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="74" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Commits</text>
+  <text x="74" y="96" text-anchor="middle" font-family="monospace" font-size="22" fill="#3fb950" font-weight="bold">${totalCommits}</text>
+
+  <rect x="140" y="50" width="108" height="58" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="194" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🔥 Streak</text>
+  <text x="194" y="96" text-anchor="middle" font-family="monospace" font-size="22" fill="#f78166" font-weight="bold">${currentStreak}d</text>
+
+  <rect x="260" y="50" width="108" height="58" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="314" y="68" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🏆 Recorde</text>
+  <text x="314" y="96" text-anchor="middle" font-family="monospace" font-size="22" fill="#e3b341" font-weight="bold">${longestStreak}d</text>
+
+  <!-- Barras de linguagens -->
+  <text x="20" y="130" font-family="monospace" font-size="10" fill="#8b949e">Top Languages</text>
+  ${languages.map((lang, i) => {
+    const barW = Math.round(lang.pct * 3.4);
+    return `
+  <rect x="20" y="${142 + i * 16}" width="8" height="8" rx="2" fill="${lang.color}"/>
+  <text x="32" y="${151 + i * 16}" font-family="monospace" font-size="10" fill="#8b949e">${lang.name}</text>
+  <rect x="110" y="${143 + i * 16}" width="${barW}" height="6" rx="3" fill="${lang.color}" opacity="0.7"/>
+  <text x="375" y="${151 + i * 16}" text-anchor="end" font-family="monospace" font-size="10" fill="${lang.color}" font-weight="bold">${lang.pct}%</text>`;
+  }).join('')}
 
   <!-- divisor vertical -->
-  <line x1="${DIVIDER_X}" y1="56" x2="${DIVIDER_X}" y2="${H - 20}" stroke="#21262d" stroke-width="1"/>
+  <line x1="398" y1="16" x2="398" y2="${H - 16}" stroke="#21262d" stroke-width="1"/>
 
-  <!-- LADO ESQUERDO -->
+  <!-- LADO DIREITO: donut + legenda -->
+  ${arcs}
 
-  <!-- Total de Commits -->
-  <rect x="24" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-  <text x="80" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Total Commits</text>
-  <text x="80" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950" font-weight="bold">${totalCommits}</text>
+  <!-- círculo interno (buraco do donut) -->
+  <circle cx="${DONUT_CX}" cy="${DONUT_CY}" r="${DONUT_INNER - 1}" fill="#0d1117"/>
 
-  <!-- Streak Atual -->
-  <rect x="148" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-  <text x="204" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🔥 Streak Atual</text>
-  <text x="204" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#f78166" font-weight="bold">${currentStreak}d</text>
+  <!-- texto no centro do donut -->
+  <text x="${DONUT_CX}" y="${DONUT_CY - 6}" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">top lang</text>
+  <text x="${DONUT_CX}" y="${DONUT_CY + 10}" text-anchor="middle" font-family="monospace" font-size="12" fill="${topLang.color}" font-weight="bold">${topLang.name}</text>
+  <text x="${DONUT_CX}" y="${DONUT_CY + 24}" text-anchor="middle" font-family="monospace" font-size="11" fill="${topLang.color}">${topLang.pct}%</text>
 
-  <!-- Streak Recorde -->
-  <rect x="272" y="62" width="112" height="66" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
-  <text x="328" y="84" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">🏆 Recorde</text>
-  <text x="328" y="110" text-anchor="middle" font-family="monospace" font-size="24" fill="#e3b341" font-weight="bold">${longestStreak}d</text>
-
-  <!-- Tabela de linguagens -->
-  <text x="24" y="152" font-family="monospace" font-size="11" fill="#8b949e" font-weight="bold">Linguagens</text>
-  <line x1="24" y1="158" x2="380" y2="158" stroke="#21262d" stroke-width="1"/>
-  ${languages.map((lang, i) => `
-  <rect x="24" y="${168 + i * 20}" width="9" height="9" rx="2" fill="${lang.color}"/>
-  <text x="38" y="${178 + i * 20}" font-family="monospace" font-size="12" fill="#c9d1d9">${lang.name}</text>
-  <text x="380" y="${178 + i * 20}" text-anchor="end" font-family="monospace" font-size="12" fill="#58a6ff" font-weight="bold">${lang.pct}%</text>
-  <rect x="180" y="${169 + i * 20}" width="${Math.round(lang.pct * 1.7)}" height="7" rx="3" fill="${lang.color}" opacity="0.5"/>
-  `).join('')}
-
-  <!-- LADO DIREITO: pizza -->
-  <text x="${PIE_CX}" y="58" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b949e">Distribuição</text>
-  ${slices}
-  ${legendItems}
+  ${legend}
 
   <!-- rodapé -->
-  <text x="${W - 16}" y="${H - 8}" text-anchor="end" font-family="monospace" font-size="10" fill="#484f58">Atualizado via GitHub Actions</text>
+  <text x="${W - 12}" y="${H - 8}" text-anchor="end" font-family="monospace" font-size="9" fill="#484f58">Atualizado via GitHub Actions</text>
 </svg>`;
 }
 
