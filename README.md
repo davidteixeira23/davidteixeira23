@@ -46,10 +46,10 @@ Se quiser conversar sobre tecnologia, tirar dúvidas ou acompanhar meus projetos
   <a href="https://github.com/davidteixeira23" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
   </a>
-  <a href="SEU_LINK_DO_LINKEDIN" target="_blank">
+  <a href="https://www.linkedin.com/in/david-teixeira-b39b65408/?skipRedirect=true" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
-  <a href="mailto:SEU_EMAIL_AQUI@gmail.com" target="_blank">
+  <a href="mailto:davipedreira250@gmail.com" target="_blank">
     <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" />
   </a>
 </div>
