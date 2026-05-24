@@ -1,17 +1,12 @@
 # Olá, eu sou o David Teixeira! 👋
 
-
-
 ---
 
 ### 🚀 Sobre Mim
 
-2º ano de Desenvolvimento de Sistemas (DS) na ETEC da Zona Leste. Apaixonado pela linguagem Java, mas também ativo em PHP e MySQL, <br>
-trabalhando para um dia fazer dos meus códigos uma utilidade para o mundo.
+2º ano de Desenvolvimento de Sistemas (DS) na ETEC da Zona Leste. Apaixonado pela linguagem Java, mas também ativo em PHP e MySQL, trabalhando para um dia fazer dos meus códigos uma utilidade para o mundo.
 
-* 🎓 Cursando **Desenvolvimento de Sistemas** na **ETEC da Zona Leste**.
-* 🧑‍💻 **16 anos** de idade, expandindo meus horizontes na tecnologia todos os dias.
-* 🛠️ Gosto tanto de criar sistemas robustos (Desktop/Web) quanto de mexer com automação e eletrônica.
+* 🛠️ Gosto tanto de criar sistemas robustos (Desktop/Web) quanto de mexer com automação e eletrônica utilizando Arduino.
 
 ---
 
@@ -35,9 +30,9 @@ trabalhando para um dia fazer dos meus códigos uma utilidade para o mundo.
 
 ### 📊 Dados sobre mim
 
-Aqui você pode ver os troféus e o nível do meu perfil com base nos códigos que commito diariamente:
+Aqui você pode ver o nível do meu perfil e o ritmo dos meus commits diários:
 
-  
+<div align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=tokyonight" alt="GitHub Streak" />
 </div>
 
@@ -45,12 +40,20 @@ Aqui você pode ver os troféus e o nível do meu perfil com base nos códigos q
 
 ### 📫 Como me encontrar
 
+Se quiser conversar sobre tecnologia, tirar dúvidas ou acompanhar meus projetos, sinta-se à vontade para entrar em contato:
+
 <div align="left">
   <a href="https://github.com/davidteixeira23" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+  </a>
+  <a href="SEU_LINK_DO_LINKEDIN" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  <a href="mailto:SEU_EMAIL_AQUI@gmail.com" target="_blank">
+    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" />
   </a>
 </div>
 
 <br />
 
-> "O único modo de fazer um excelente trabalho é amar o que você faz."
+> "De que serve ao homem conquistar o mundo inteiro se perder a alma?"
