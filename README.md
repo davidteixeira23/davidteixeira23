@@ -1,15 +1,13 @@
 # Olá, eu sou o David Teixeira! 👋
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=davidteixeira23&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true" alt="Estatísticas do GitHub de David" height="180M" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=davidteixeira23&layout=compact&theme=tokyonight&langs_count=7" alt="Linguagens mais usadas por David" height="180M" />
-</div>
+
 
 ---
 
 ### 🚀 Sobre Mim
 
-Estudante focado e apaixonado por criar soluções conectando o mundo do software e do hardware.
+2º ano de Desenvolvimento de Sistemas (DS) na ETEC da Zona Leste. Apaixonado pela linguagem Java, mas também ativo em PHP e MySQL, <br>
+trabalhando para um dia fazer dos meus códigos uma utilidade para o mundo.
 
 * 🎓 Cursando **Desenvolvimento de Sistemas** na **ETEC da Zona Leste**.
 * 🧑‍💻 **16 anos** de idade, expandindo meus horizontes na tecnologia todos os dias.
