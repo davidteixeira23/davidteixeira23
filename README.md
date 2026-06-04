@@ -31,6 +31,7 @@
 ### 📊 Dados sobre mim
 
 Aqui você pode ver o nível do meu perfil e o ritmo dos meus commits diários:
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=davidteixeira23&theme=tokyonight" alt="GitHub Streak" />
 
 <div align="center">
 </div>
