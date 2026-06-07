@@ -1,7 +1,7 @@
 # Olá, eu sou o David Teixeira! 👋
 
 ---
-fy
+
 ### 🚀 Sobre Mim
 
 2º ano de Desenvolvimento de Sistemas (DS) na ETEC da Zona Leste. Apaixonado pela linguagem Java, mas também ativo em PHP e MySQL, trabalhando para um dia fazer dos meus códigos uma utilidade para o mundo.
