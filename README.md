@@ -1,5 +1,5 @@
 # Olá, eu sou o David Teixeira! 👋
-q
+
 ---
 
 ### 🚀 Sobre Mim
